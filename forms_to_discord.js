@@ -1,10 +1,10 @@
-const webhooks = ["discord_webhook"]; // Lien du Webhook discord (Obligatoire)
+const webhooks = ["discord_webhook"]; // Link Webhook discord
 
-const title = "your_title"; // Le titre de votre formulaire (Facultatif)
-const avatarImage = "your_image"; // Une image pour votre Webhook (Facultatif)
-const shortDescription = "your_description"; // Une description selon vos envies (Facultatif)
-const colour = "#0c146e"; // Couleur du embed (Obligatoire en code HTML)
-const mention = "your_mention"; // Mentionner un rôle : <&ID> || Mentionner un utilisateur : <@ID>
+const title = "your_title"; // Title
+const avatarImage = "your_image"; // Image
+const shortDescription = "your_description"; // Descript
+const colour = "#0c146e"; // Embed Color (HTML code)
+const mention = "your_mention"; // Ping role : <&ID> || Ping user : <@ID>
 
 const form = FormApp.getActiveForm();
 const allResponses = form.getResponses();
@@ -12,7 +12,7 @@ const latestResponse = allResponses[allResponses.length - 1];
 const response = latestResponse.getItemResponses();
 var items = [];
 
-if (!webhooks) throw "Vous avez oublié le lien du webhook.";
+if (!webhooks) throw "The link is invalid.";
 
 function embedText(e) {
     for (var i = 0; i < response.length; i++) {
@@ -20,7 +20,7 @@ function embedText(e) {
         const answer = response[i].getResponse();
         if (answer == "") continue;
         items.push({ "name": question, "value": answer });
-        function data(item) { return [ `__**${item.name} :**__`, `${item.value}` ].join("\n"); } // Vous ne voulez pas que les questions soient surlignées et en gras ? Retirez les __ et **
+        function data(item) { return [ `__**${item.name} :**__`, `${item.value}` ].join("\n"); }
     }
 
     try {
@@ -46,7 +46,7 @@ function embedText(e) {
             UrlFetchApp.fetch(webhooks[i], embed);
         }
 
-        form.deleteResponse(latestResponse.getId()); // Vous ne voulez pas que le formulaire se supprime automatiquement ? Retirez cette ligne
+        form.deleteResponse(latestResponse.getId()); // If you don't want the script to delete the answers from the form, delete this line.
     } catch (error) {
         Logger.log(error);
     }
